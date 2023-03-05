@@ -1,4 +1,4 @@
-function validateOwnerCreateData() {
+function validateOwnerCreateData(data) {
     const { z } = require("zod");
     const ownerZchema = z.object({
         name: z.string({
@@ -13,7 +13,7 @@ function validateOwnerCreateData() {
           .max(20, "Owner name must be up to 20 characters"),
     });
 
-    return ownerZchema.safeParse(owner.payload);
+    return ownerZchema.safeParse(data);
 }
 
 module.exports = {
