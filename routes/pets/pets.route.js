@@ -15,14 +15,14 @@ router.get('/', async function(req, res) {
     return;
   }
 
-  const allPetsCount = await Pet.count();
-  const petsWithOwners = await Pet.find()
+  const count = await Pet.count();
+  const items = await Pet.find()
     .populate("owner")
     .skip(pageSize * page)
     .limit(pageSize)
     .exec();
 
-  res.json({ petsWithOwners, allPetsCount, page, pageSize });
+  res.json({ items, count, page, pageSize });
 });
 
 router.get('/:id', async function(req, res) {

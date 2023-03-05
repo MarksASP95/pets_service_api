@@ -15,13 +15,13 @@ router.get('/', async function(req, res) {
       return;
     }
   
-    const allOwnersCount = await Owner.count();
-    const owners = await Owner.find()
+    const count = await Owner.count();
+    const items = await Owner.find()
       .skip(pageSize * page)
       .limit(pageSize)
       .exec();
   
-    res.json({ owners, allOwnersCount, page, pageSize });
+    res.json({ items, count, page, pageSize });
   });
   
 router.get('/:id', async function(req, res) {
