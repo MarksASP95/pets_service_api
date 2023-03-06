@@ -14,10 +14,6 @@ function validatePetCreateData(data) {
   });
 
   const petParseResult = petZchema.safeParse(data);
-  if (!petParseResult.success) {
-    res.status(400).send({ success: false, error: JSON.parse(petParseResult.error.message) });
-    return;
-  }
 
   return petParseResult;
 }
@@ -38,10 +34,6 @@ function validatePetUpdateData(data) {
     });
 
     const petParseResult = petZchema.safeParse(data);
-    if (!petParseResult.success) {
-        res.status(400).send({ success: false, error: JSON.parse(petParseResult.error.message) });
-        return;
-    }
 
     return petParseResult;
 }
