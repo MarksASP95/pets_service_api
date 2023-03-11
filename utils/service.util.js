@@ -30,6 +30,30 @@ function validateServiceCreateData(data) {
   return serviceParseResult;
 }
 
+function validateServiceRequestCreateData(data) {
+    const { z } = require("zod");
+
+    const serviceRequestZchema = z.object({
+        petId: z.string({ required_error: "Pet ID is required" }),
+        servicesIds: z.string().array(),
+        total: z.number({ required_error: "Total is required" }).gte(0.01),
+    });
+
+    const serviceRequestParseResult = serviceRequestZchema.safeParse(data);
+
+    return serviceRequestParseResult;
+}
+
+function validateServiceRequestStatus(status) {
+    const { z } = require("zod");
+
+    const newStatusZchema = z.enum(["due", "in_process", "done", "cancelled"]);
+
+    return newStatusZchema.safeParse(status);
+}
+
 module.exports = {
     validateServiceCreateData,
+    validateServiceRequestCreateData,
+    validateServiceRequestStatus,
 };
