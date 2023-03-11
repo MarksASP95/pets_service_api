@@ -7,7 +7,7 @@ const { validatePetCreateData, validatePetUpdateData } = require('../../utils/pe
 const { validateOwnerCreateData } = require('../../utils/owners.util');
 
 router.get('/', async function(req, res) {
-    let page = req.query.page ? parseInt(req.query.page) : 0;
+    let page = req.query.page ? parseInt(req.query.page): 1;
     let pageSize = req.query.page_size ? parseInt(req.query.page_size) : 10;
   
     if (typeof page !== "number" || typeof pageSize !== "number") {
@@ -17,7 +17,7 @@ router.get('/', async function(req, res) {
   
     const count = await Owner.count();
     const items = await Owner.find()
-      .skip(pageSize * page)
+      .skip(pageSize * (page - 1))
       .limit(pageSize)
       .exec();
   

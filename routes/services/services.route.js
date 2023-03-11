@@ -13,7 +13,7 @@ const {
 } = require('../../utils/service.util');
 
 router.get('/', async function(req, res) {
-    let page = req.query.page ? parseInt(req.query.page) : 0;
+    let page = req.query.page ? parseInt(req.query.page): 1;
     let pageSize = req.query.page_size ? parseInt(req.query.page_size) : 10;
   
     if (typeof page !== "number" || typeof pageSize !== "number") {
@@ -23,7 +23,7 @@ router.get('/', async function(req, res) {
   
     const count = await Service.count();
     const items = await Service.find()
-      .skip(pageSize * page)
+      .skip(pageSize * (page - 1))
       .limit(pageSize)
       .exec();
   
@@ -31,7 +31,7 @@ router.get('/', async function(req, res) {
 });
 
 router.get('/requests', async function (req, res) {
-  let page = req.query.page ? parseInt(req.query.page) : 0;
+  let page = req.query.page ? parseInt(req.query.page): 1;
   let pageSize = req.query.page_size ? parseInt(req.query.page_size) : 10;
 
   if (typeof page !== "number" || typeof pageSize !== "number") {
@@ -41,7 +41,7 @@ router.get('/requests', async function (req, res) {
 
   const count = await ServiceRequest.count();
   const items = await ServiceRequest.find()
-    .skip(pageSize * page)
+    .skip(pageSize * (page - 1))
     .limit(pageSize)
     .exec();
 
