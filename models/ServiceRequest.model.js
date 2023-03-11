@@ -30,6 +30,15 @@ const ServiceRequestSchema = new mongoose.Schema({
 {
     timestamps: true,
     collection: "service_requests",
+    toJSON: { virtuals: true, },
+    toObject: { virtuals: true, }
+});
+
+ServiceRequestSchema.virtual("services", {
+    ref: "Service",
+    localField: "servicesIds",
+    foreignField: "_id",
+    justOne: false,
 });
 
 const ServiceRequest = mongoose.model("ServiceRequest", ServiceRequestSchema);
