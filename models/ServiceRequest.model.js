@@ -41,6 +41,13 @@ ServiceRequestSchema.virtual("services", {
     justOne: false,
 });
 
+ServiceRequestSchema.virtual("pet", {
+    ref: "Pet",
+    localField: "petId",
+    foreignField: "_id",
+    justOne: true,
+});
+
 const ServiceRequest = mongoose.model("ServiceRequest", ServiceRequestSchema);
 
 module.exports = { ServiceRequest };

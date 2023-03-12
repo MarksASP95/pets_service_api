@@ -42,6 +42,7 @@ router.get('/requests', async function (req, res) {
   const count = await ServiceRequest.count();
   const items = await ServiceRequest.find()
     .populate("services")
+    .populate("pet")
     .skip(pageSize * (page - 1))
     .limit(pageSize)
     .exec();
