@@ -21,13 +21,17 @@ router.get('/', async function(req, res) {
       return;
     }
   
-    const count = await Service.count();
-    const items = await Service.find()
-      .skip(pageSize * (page - 1))
-      .limit(pageSize)
-      .exec();
-  
-    res.json({ items, count, page, pageSize });
+    try {
+      const count = await Service.count();      
+      const items = await Service.find()
+        .skip(pageSize * (page - 1))
+        .limit(pageSize)
+        .exec();
+    
+      return res.json({ items, count, page, pageSize });
+    } catch (error) {
+      return res.status(500).send("Error");
+    }
 });
 
 router.get('/requests', async function (req, res) {
@@ -39,15 +43,19 @@ router.get('/requests', async function (req, res) {
     return;
   }
 
-  const count = await ServiceRequest.count();
-  const items = await ServiceRequest.find()
-    .populate("services")
-    .populate("pet")
-    .skip(pageSize * (page - 1))
-    .limit(pageSize)
-    .exec();
-
-  res.json({ items, count, page, pageSize });
+  try {
+    const count = await ServiceRequest.count();
+    const items = await ServiceRequest.find()
+      .populate("services")
+      .populate("pet")
+      .skip(pageSize * (page - 1))
+      .limit(pageSize)
+      .exec();
+  
+    return res.json({ items, count, page, pageSize });
+  } catch (error) {
+    return res.status(500).send("Error");
+  }
 });
 
 router.put('/requests/set-status', async function (req, res) {

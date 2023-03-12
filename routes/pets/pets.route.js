@@ -16,13 +16,19 @@ router.get('/', async function(req, res) {
   }
 
   const count = await Pet.count();
-  const items = await Pet.find()
-    .populate("owner")
-    .skip(pageSize * (page - 1))
-    .limit(pageSize)
-    .exec();
 
-  res.json({ items, count, page, pageSize });
+  try {
+    const items = await Pet.find()
+      .populate("owner")
+      .skip(pageSize * (page - 1))
+      .limit(pageSize)
+      .exec();
+      
+    return res.json({ items, count, page, pageSize });
+  } catch (error) {
+    return res.status(500).send("Error");
+  }
+
 });
 
 router.get('/:id', async function(req, res) {

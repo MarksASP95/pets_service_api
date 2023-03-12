@@ -16,12 +16,16 @@ router.get('/', async function(req, res) {
     }
   
     const count = await Owner.count();
-    const items = await Owner.find()
-      .skip(pageSize * (page - 1))
-      .limit(pageSize)
-      .exec();
-  
-    res.json({ items, count, page, pageSize });
+    try {
+      const items = await Owner.find()
+        .skip(pageSize * (page - 1))
+        .limit(pageSize)
+        .exec();
+    
+      res.json({ items, count, page, pageSize });
+    } catch (error) {
+      return res.status(500).send("Error");
+    }
   });
   
 router.get('/:id', async function(req, res) {
